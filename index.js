@@ -189,5 +189,7 @@ exports.truncatedSha256Prefix = (str, bits) => {
 
 exports.getPrefixes = (url, size=32) => {
   const canonical = exports.canonicalize(url);
-  return exports.suffixPostfixExpressions(canonicalURL).map((url) => this.truncatedSha256Prefix(url, size))
+  return new Set(
+    Array.from(exports.suffixPostfixExpressions(canonical)).map((url) => this.truncatedSha256Prefix(url, size))
+  );
 }
