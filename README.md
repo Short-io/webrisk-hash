@@ -1,5 +1,7 @@
 # Webrisk Hashing Algorithm
 
+[![Build Status](https://travis-ci.org/Short-cm/webrisk-hash.svg?branch=master)](https://travis-ci.org/Short-cm/webrisk-hash)
+
 Returns list of hashes for given URL
 
 For now: has function canonicalize which creates canonical URL with webrisk rules.
