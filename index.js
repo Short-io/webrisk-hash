@@ -1,4 +1,5 @@
 const URI = require("uri-js");
+const crypto = require("crypto");
 const decodeUriComponent = require('decode-uri-component');
 const punycode = require('punycode');
 var token = '%[a-f0-9]{2}';
@@ -179,4 +180,9 @@ exports.suffixPostfixExpressions = function (canonicalURL) {
   }
   res.splice(1, res.length - 5);
   return new Set(res.flat());
+}
+
+exports.truncatedSha256Prefix = (str, bits) => {
+  const hash = crypto.createHash('sha256').update(str).digest();
+  return hash.slice(0, bits / 8);
 }
