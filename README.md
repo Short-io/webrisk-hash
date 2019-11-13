@@ -1,12 +1,24 @@
 # Webrisk Hashing Algorithm
 
-TODO: Returns list of hashes for given URL
+Returns list of hashes for given URL
 
 For now: has function canonicalize which creates canonical URL with webrisk rules.
 
 ```javascript
 npm install webrisk-hash
 ```
+
+### Main usage
+
+```javascript
+getPrefixes
+const { getPrefixes } = require('webrisk-hash');
+getPrefixes('http://a.b.c/1/2.html?param=1') === new Set([
+    new Buffer(),
+]);
+```
+
+### Exported functions
 
 #### suffixPostfixExpressions
 
