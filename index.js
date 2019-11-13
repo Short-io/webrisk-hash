@@ -144,10 +144,39 @@ exports.canonicalize = function(url) {
       break;
     }
   }
-  //urlObj.path = urlObj.path.replace(/^$/, '/').replace(/\/\//g, '/');
   urlObj.path = webriskURIEscape(urlObj.path);
   urlObj.path = urlObj.path.replace(/\/\//g, '/');
   delete urlObj.fragment;
-  //urlObj.host = customDecodeURIComponent(customDecodeURIComponent(punycode.toUnicode(urlObj.host)));
   return URI.serialize(urlObj, { unicodeSupport: true, scheme: 'webrisk' });
 };
+
+exports.suffixPostfixExpressions = function (canonicalURL) {
+  const urlObj = URI.parse(
+    canonicalURL,
+    { scheme: 'webrisk' }
+  );
+  const fullExpression = urlObj.host + urlObj.path;
+  let iDomain = urlObj.host;
+  const res = [];
+  while (iDomain.match(/.*\..*/) && !iDomain.match(/^(\d+\.){2}\d+$/)) {
+    const domainRes = [];
+    if (urlObj.query) {
+      domainRes.push(
+        iDomain + urlObj.path + '?' + urlObj.query,
+      );
+    }
+    res.push(domainRes);
+    let iPath = urlObj.path;
+    while (iPath.match(/\/.+/)) {
+      domainRes.push(
+        iDomain + iPath,
+      );
+      iPath = iPath.replace(/[^/]*\/?$/, '');
+    }
+    domainRes.push(iDomain + '/');
+    domainRes.splice(1, domainRes.length - 6)
+    iDomain = iDomain.replace(/^.*?\./, '')
+  }
+  res.splice(1, res.length - 5);
+  return new Set(res.flat());
+}

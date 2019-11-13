@@ -8,6 +8,33 @@ For now: has function canonicalize which creates canonical URL with webrisk rule
 npm install webrisk-hash
 ```
 
+#### suffixPostfixExpressions
+
+Returns list of expressions suitable for webrisk API (https://cloud.google.com/web-risk/docs/urls-hashing#suffixprefix_expressions)
+
+```javascript
+const { suffixPostfixExpressions } = require('webrisk-hash');
+suffixPostfixExpressions('http://a.b.c/1/2.html?param=1') === new Set([
+    'a.b.c/1/2.html?param=1',
+    'a.b.c/1/2.html',
+    'a.b.c/',
+    'a.b.c/1/',
+    'b.c/1/2.html?param=1',
+    'b.c/1/2.html',
+    'b.c/',
+    'b.c/1/',
+]);
+
+suffixPostfixExpressions('http://192.168.0.1/1') === new Set([
+    '192.168.0.1/1',
+    '192.168.0.1/',
+]));
+```
+
+#### canonicalize
+
+Makes URL canonical according to the crazy webrisk requirements (https://cloud.google.com/web-risk/docs/urls-hashing#canonicalization)
+
 ```javascript
 const { canonicalize } = require('webrisk-hash');
 canonicalize("http://host/%25%32%35") == "http://host/%25";
