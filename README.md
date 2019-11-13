@@ -1,6 +1,7 @@
 # Webrisk Hashing Algorithm
 
 [![Build Status](https://travis-ci.org/Short-cm/webrisk-hash.svg?branch=master)](https://travis-ci.org/Short-cm/webrisk-hash)
+[![Maintainability](https://api.codeclimate.com/v1/badges/91a803000f8d3c6275a8/maintainability)](https://codeclimate.com/github/Short-cm/webrisk-hash/maintainability)
 
 Returns list of hashes for given URL
 
@@ -13,11 +14,14 @@ npm install webrisk-hash
 ### Main usage
 
 ```javascript
-getPrefixes
-const { getPrefixes } = require('webrisk-hash');
-getPrefixes('http://a.b.c/1/2.html?param=1') === new Set([
-    new Buffer(),
-]);
+getPrefixes("https://google.com/a/test/index.html?abc123") ===
+    new Set([
+      Buffer.from([136, 152, 30, 98]),
+      Buffer.from([166, 49, 51, 141]),
+      Buffer.from([184, 40, 242, 237]),
+      Buffer.from([24, 12, 238, 174]),
+      Buffer.from([92, 148, 141, 10])
+    ])
 ```
 
 ### Exported functions
