@@ -1,11 +1,9 @@
-# Webrisk Hashing Algorithm
+# Webrisk (and Safebrowsing) Hashing Algorithm
 
 [![Build Status](https://travis-ci.org/Short-cm/webrisk-hash.svg?branch=master)](https://travis-ci.org/Short-cm/webrisk-hash)
 [![Maintainability](https://api.codeclimate.com/v1/badges/91a803000f8d3c6275a8/maintainability)](https://codeclimate.com/github/Short-cm/webrisk-hash/maintainability)
 
 Returns list of hashes for given URL
-
-For now: has function canonicalize which creates canonical URL with webrisk rules.
 
 ```javascript
 npm install webrisk-hash
