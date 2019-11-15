@@ -179,7 +179,7 @@ exports.suffixPostfixExpressions = function (canonicalURL) {
     iDomain = iDomain.replace(/^.*?\./, '')
   }
   res.splice(1, res.length - 5);
-  return new Set(res.flat());
+  return new Set([].concat(...res));
 }
 
 exports.truncatedSha256Prefix = (str, bits) => {

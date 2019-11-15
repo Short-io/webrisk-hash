@@ -3,7 +3,7 @@ const { getPrefixes } = require("../index");
 
 exports.simple = function() {
   assert.deepEqual(
-    getPrefixes("https://google.com/a/test/index.html?abc123"),
+    getPrefixes("https://google.com/a/test/index.html?abc123", 32),
     new Set([
       Buffer.from([136, 152, 30, 98]),
       Buffer.from([166, 49, 51, 141]),

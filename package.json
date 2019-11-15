@@ -1,6 +1,6 @@
 {
   "name": "webrisk-hash",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "",
   "main": "index.js",
   "typings": "index.d.ts",
