@@ -127,10 +127,10 @@ resolve@^1.10.0:
   dependencies:
     path-parse "^1.0.6"
 
-teenytest@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/teenytest/-/teenytest-5.2.1.tgz#e4f7b28be84351c9965dc7fd493c947fbf0f490c"
-  integrity sha512-wBiFrHouF1UEC9fwEZAK/zwEHmeUmhQ551X5v9kZMz/MzRQD0hVa+G0DAVUPSe23QFRHHdogRTD5cD3wWD35xg==
+teenytest@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/teenytest/-/teenytest-5.3.0.tgz#133e7bdab700e09d0f7ed14f60e9607b171b3e18"
+  integrity sha512-E3T/aA9Z7aiJ8r76BkCOu/Lz/5rsbyKgHKjsX+narzTNANDiqqGBxBfixeE4Nr6ln/TVbWmzww0NsGij+b08bA==
   dependencies:
     async "^2.6.2"
     function-names-at-line "^1.0.0"
