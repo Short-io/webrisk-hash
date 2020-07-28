@@ -1,6 +1,6 @@
 {
   "name": "webrisk-hash",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -17,8 +17,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Short-io/webrisk-hash.git"
+    "url": "https://github.com/Short-io/webrisk-hash.git"
   },
+  "bugs": {
+    "url": "https://github.com/Short-io/webrisk-hash/issues"
+  },
+  "homepage": "https://github.com/Short-io/webrisk-hash",
   "dependencies": {
     "decode-uri-component": "^0.2.0",
     "uri-js": "github:Short-cm/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
