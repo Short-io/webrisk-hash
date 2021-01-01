@@ -146,9 +146,9 @@ teenytest@^6.0.2:
     minimist "^1.2.0"
     resolve "^1.10.0"
 
-"uri-js@github:Short-cm/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6":
+"uri-js@github:Short-io/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6":
   version "4.2.2"
-  resolved "https://codeload.github.com/Short-cm/uri-js/tar.gz/fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
+  resolved "https://codeload.github.com/Short-io/uri-js/tar.gz/fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
   dependencies:
     punycode "^2.1.0"
 
