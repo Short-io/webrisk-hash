@@ -1,7 +1,5 @@
 const URI = require("uri-js");
 const crypto = require("crypto");
-const decodeUriComponent = require('decode-uri-component');
-const punycode = require('punycode');
 var token = '%[a-f0-9]{2}';
 var singleMatcher = new RegExp(token, 'gi');
 var multiMatcher = new RegExp('(' + token + ')+', 'gi');
@@ -34,7 +32,7 @@ function decode(input) {
 		var tokens = input.match(singleMatcher);
 
 		for (var i = 1; i < tokens.length; i++) {
-			input = decodeComponents(tokens, i).join('');
+			input = (decodeComponents(tokens, i) ?? []).join('');
 
 			tokens = input.match(singleMatcher);
 		}

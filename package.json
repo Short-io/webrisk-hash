@@ -1,6 +1,6 @@
 {
   "name": "webrisk-hash",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "teenytest": "^6.0.2"
+    "teenytest": "^6.0.3"
   },
   "bin": {
     "webrisk-hash": "webrisk-hash.js"
@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/Short-io/webrisk-hash",
   "dependencies": {
-    "decode-uri-component": "^0.2.0",
     "uri-js": "github:Short-io/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
   }
 }

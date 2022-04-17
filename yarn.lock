@@ -37,11 +37,6 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
-
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -133,10 +128,10 @@ resolve@^1.10.0:
   dependencies:
     path-parse "^1.0.6"
 
-teenytest@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/teenytest/-/teenytest-6.0.2.tgz#1c2f42057f3320c0798ae6d88c30d95932e7ecac"
-  integrity sha512-54ATJlqxe3uZt+MABHLI9oouwNQT+/vauiWaoIFpvYq3lVS70e5/EOqnqt0qc92XyawdQTUe3BA7DW5nwQ4oUQ==
+teenytest@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/teenytest/-/teenytest-6.0.3.tgz#4eb2cf7de51f119d845068b2bd3efe2d1a611508"
+  integrity sha512-pzF7V4CAX0kMhAmVNKydAGZ6QA0N02WRlFq9J1JHub9Uh0tIkyctdyk95Im6ovyyFv4QZCOy6OnOR05zUtQF8g==
   dependencies:
     async "^2.6.2"
     function-names-at-line "^1.1.0"
