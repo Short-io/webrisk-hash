@@ -7,7 +7,7 @@ var multiMatcher = new RegExp('(' + token + ')+', 'gi');
 function decodeComponents(components, split) {
 	try {
 		// Try to decode the entire string first
-		return decodeURIComponent(components.join(''));
+		return [decodeURIComponent(components.join(''))];
 	} catch (err) {
 		// Do nothing
 	}
@@ -32,7 +32,7 @@ function decode(input) {
 		var tokens = input.match(singleMatcher);
 
 		for (var i = 1; i < tokens.length; i++) {
-			input = (decodeComponents(tokens, i) ?? []).join('');
+			input = decodeComponents(tokens, i).join('');
 
 			tokens = input.match(singleMatcher);
 		}
