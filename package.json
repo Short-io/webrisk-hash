@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/Short-io/webrisk-hash",
   "dependencies": {
-    "uri-js": "github:Short-io/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
+    "uri-js": "https://github.com/Short-io/uri-js#fc8a1be20f4c2f522b57e87b46f2e5175c8dc8a6"
   }
 }
