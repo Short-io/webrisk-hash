@@ -1,7 +1,8 @@
-const assert = require('assert');
-const { suffixPostfixExpressions } = require("../index");
+import assert from 'assert';
+import { suffixPostfixExpressions } from "../index.js";
+import test from "node:test";
 
-exports.pathComponents = () => {
+test("pathComponents", t => {
     assert.deepEqual(suffixPostfixExpressions('http://a.b.c/1/2.html?param=1'), new Set([
         'a.b.c/1/2.html?param=1',
         'a.b.c/1/2.html',
@@ -12,16 +13,16 @@ exports.pathComponents = () => {
         'b.c/',
         'b.c/1/',
     ]));
-}
+});
 
-exports.pathComponentsForIP = () => {
+test("pathComponentsForIP", t => {
     assert.deepEqual(suffixPostfixExpressions('http://192.168.0.1/1'), new Set([
         '192.168.0.1/1',
         '192.168.0.1/',
     ]));
-}
+});
 
-exports.pathComponents = () => {
+test("pathComponents", t => {
     assert.deepEqual(suffixPostfixExpressions('http://a.b.c/1/2/3/4/5/6/7/8.html?param=1'), new Set([
         'a.b.c/1/2/3/4/5/6/7/8.html?param=1',
         'a.b.c/1/2/3/4/',
@@ -36,9 +37,9 @@ exports.pathComponents = () => {
         'b.c/1/',
         'b.c/',
     ]));
-}
+});
 
-exports.sixLevelSubdomain = () => {
+test("sixLevelSubdomain", t => {
     assert.deepEqual(suffixPostfixExpressions('http://a.b.c.d.e.f.g/1.html'), new Set([
         'a.b.c.d.e.f.g/1.html',
         'a.b.c.d.e.f.g/',
@@ -52,9 +53,9 @@ exports.sixLevelSubdomain = () => {
         'f.g/1.html',
         'f.g/',
     ]));
-}
+});
 
-exports.sevenLevelSubdomain = () => {
+test("sevenLevelSubdomain", t => {
     assert.deepEqual(suffixPostfixExpressions('http://x.a.b.c.d.e.f.g/1.html'), new Set([
         'x.a.b.c.d.e.f.g/1.html',
         'x.a.b.c.d.e.f.g/',
@@ -68,4 +69,4 @@ exports.sevenLevelSubdomain = () => {
         'f.g/1.html',
         'f.g/',
     ]));
-}
+});

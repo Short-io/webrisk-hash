@@ -1,7 +1,8 @@
-const assert = require('assert');
-const { truncatedSha256Prefix } = require("../index");
+import assert from 'assert';
+import test from "node:test";
+import { truncatedSha256Prefix } from "../index.js";
 
-exports.len4 = function () {
+test("len4", t => {
     // Example B1 from FIPS-180-2
     const input1 = "abc";
     const output1 = truncatedSha256Prefix(input1, 32);
@@ -9,9 +10,9 @@ exports.len4 = function () {
     assert.equal(output1.length, 4);  // 4 bytes == 32 bits
     for (let i = 0; i < output1.length; i++)
         assert.equal(output1[i], expected1[i]);
-}
+});
 
-exports.len6 = function () {
+test("len6", t => {
     // Example B2 from FIPS-180-2
     const input2 = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
     const output2 = truncatedSha256Prefix(input2, 48);
@@ -19,8 +20,9 @@ exports.len6 = function () {
     assert.equal(output2.length, 6);
     for (let i = 0; i < output2.length; i++)
         assert.equal(output2[i], expected2[i]);
-}
-exports.len12 = function () {
+});
+
+test("len12", t => {
     // Example B3 from FIPS-180-2
     const input3 = Array(1000000).fill('a').join('');  // 'a' repeated a million times
     const output3 = truncatedSha256Prefix(input3, 96);
@@ -29,4 +31,4 @@ exports.len12 = function () {
     assert.equal(output3.length, 12);
     for (let i = 0; i < output3.length; i++)
         assert.equal(output3[i], expected3[i]);
-}
+});

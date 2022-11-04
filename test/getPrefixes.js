@@ -1,7 +1,8 @@
-const assert = require("assert");
-const { getPrefixes } = require("../index");
+import assert from "assert";
+import { getPrefixes } from "../index.js";
+import test from "node:test";
 
-exports.simple = function() {
+test("prefixes", function() {
   assert.deepEqual(
     getPrefixes("https://google.com/a/test/index.html?abc123", 32),
     new Set([
@@ -12,4 +13,4 @@ exports.simple = function() {
       Buffer.from([92, 148, 141, 10])
     ])
   );
-};
+});

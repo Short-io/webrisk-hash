@@ -1,8 +1,10 @@
-const URI = require("uri-js");
-const crypto = require("crypto");
-var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
-var multiMatcher = new RegExp('(' + token + ')+', 'gi');
+import crypto from "crypto";
+const URI_PARSE = /^(?:([^:\/?#]+):)?(?:\/\/((?:([^\/?#@]*)@)?(\[[^\/?#\]]+\]|[^\/?#:]*)(?:\:(\d*))?))?([^?#]*)(?:\?([^#]*))?(?:#((?:.|\n|\r)*))?/i; // regex for tokenising url from urijs module
+const DOUBLE_PATH_RE = new RegExp("//", "g");
+
+const token = '%[a-f0-9]{2}';
+const singleMatcher = new RegExp(token, 'gi');
+const multiMatcher = new RegExp('(' + token + ')+', 'gi');
 
 function decodeComponents(components, split) {
 	try {
@@ -98,74 +100,57 @@ function webriskURIEscape(c) {
   return c.replace(/./g, (chr) => escapeCharacter(chr.charCodeAt(0)))
 }
 
-URI.SCHEMES.webrisk = {
-  scheme: 'webrisk',
-  domainHost: false,
-  serialize(components, options) {
-    URI.SCHEMES.http.serialize(components, options);
-  },
-  parse(components, options) {
-    URI.SCHEMES.http.parse(components, options);
-  },
-  normalizeComponentEncoding(components) {
-    for (const param of ['host', 'path']) {
-      let prevParam;
-      for (let infiniteLoopPreventor = 0; infiniteLoopPreventor < 1000; infiniteLoopPreventor ++) {
-        prevParam = components[param];
-        components[param] = customDecodeURIComponent(prevParam).replace(/[\t\x0a\x0d]/g, '');
-        if (components[param] === prevParam) {
+const normalizeIPAddress = (c) => {
+	if (c.match(/^\d+$/)) {
+		return int2ip(c);
+	}
+	return c;
+}
+
+const normalizeComponentEncoding = (c) => {
+   let value = c;
+   let prevValue;
+   for (let infiniteLoopPreventor = 0; infiniteLoopPreventor < 1000; infiniteLoopPreventor ++) {
+	prevValue = value;
+        value = customDecodeURIComponent(prevValue).replace(/[\t\x0a\x0d]/g, '');
+        if (value === prevValue) {
           break;
         }
-      }
-    }
-    components.path = webriskURIEscape(components.path);
-    components.host = webriskURIEscape(components.host.toLowerCase());
-  },
-  unicodeSupport: false,
+   }
+   return webriskURIEscape(value);
+}
+
+const normalizeDotsInPaths = (path) => {
+	const pathParts = path.split("/")
+		.filter((el, index, arr) => (el != "" || index === 0 || index === arr.length - 1) && el != ".")
+		.filter((el, index, arr) => el != ".." && arr[index + 1] !== "..");
+	return pathParts.join("/") || "/";
+}
+
+export const canonicalize = function(url) {
+  const urlWithScheme = url.includes("://") ? url.trim() : "http://" + url.trim();
+  const [, schema, , userinfo, host, , path, query, fragment] = urlWithScheme.match(URI_PARSE);
+  const normalizedHost = normalizeComponentEncoding(normalizeIPAddress(host)).replace(/\.+$/, "").toLowerCase();
+  const normalizedPath = normalizeComponentEncoding(normalizeDotsInPaths(path));
+  const normalizedQuery = query !== undefined ? `?${query}` : ""
+  
+  return `${schema}://${userinfo ?? ""}${normalizedHost}${normalizedPath}${normalizedQuery}`;
 };
 
-
-exports.canonicalize = function(url) {
-  const urlObj = URI.parse(
-    url.trim().match(/^\w+:\/\//) ? url.trim() : `http://${url.trim()}`,
-    { scheme: 'webrisk' }
-  );
-  urlObj.host = urlObj.host.replace(/\.+$/, "");
-  if (urlObj.host.match(/^\d+$/)) {
-    urlObj.host = int2ip(urlObj.host);
-  }
-  urlObj.port = "";
-  let prevPath;
-  for (let infiniteLoopPreventor = 0; infiniteLoopPreventor < 1000; infiniteLoopPreventor ++) {
-    prevPath = urlObj.path;
-    urlObj.path = customDecodeURIComponent(prevPath).replace(/[\t\x0a\x0d]/g, '');
-    if (urlObj.path === prevPath) {
-      break;
-    }
-  }
-  urlObj.path = webriskURIEscape(urlObj.path);
-  urlObj.path = urlObj.path.replace(/\/\//g, '/');
-  delete urlObj.fragment;
-  return URI.serialize(urlObj, { unicodeSupport: true, scheme: 'webrisk' });
-};
-
-exports.suffixPostfixExpressions = function (canonicalURL) {
-  const urlObj = URI.parse(
-    canonicalURL,
-    { scheme: 'webrisk' }
-  );
-  const fullExpression = urlObj.host + urlObj.path;
-  let iDomain = urlObj.host;
+export const suffixPostfixExpressions = function (canonicalURL) {
+  const [, schema, , userinfo, host, , path, query, fragment] = canonicalURL.match(URI_PARSE);
+  const fullExpression = host + path;
+  let iDomain = host;
   const res = [];
   while (iDomain.match(/.*\..*/) && !iDomain.match(/^(\d+\.){2}\d+$/)) {
     const domainRes = [];
-    if (urlObj.query) {
+    if (query) {
       domainRes.push(
-        iDomain + urlObj.path + '?' + urlObj.query,
+        iDomain + path + '?' + query,
       );
     }
     res.push(domainRes);
-    let iPath = urlObj.path;
+    let iPath = path;
     while (iPath.match(/\/.+/)) {
       domainRes.push(
         iDomain + iPath,
@@ -180,19 +165,19 @@ exports.suffixPostfixExpressions = function (canonicalURL) {
   return new Set([].concat(...res));
 }
 
-exports.truncatedSha256Prefix = (str, bits) => {
+export const truncatedSha256Prefix = (str, bits) => {
   const hash = crypto.createHash('sha256').update(str).digest();
   return hash.slice(0, bits / 8);
 }
 
-exports.getPrefixMap = (url, size=32*8) => {
-  const canonical = exports.canonicalize(url);
-  return Array.from(exports.suffixPostfixExpressions(canonical)).map((url) => [url, this.truncatedSha256Prefix(url, size)]);
+export const getPrefixMap = (url, size=32*8) => {
+  const canonical = canonicalize(url);
+  return Array.from(suffixPostfixExpressions(canonical)).map((url) => [url, truncatedSha256Prefix(url, size)]);
 }
 
-exports.getPrefixes = (url, size=32*8) => {
-  const canonical = exports.canonicalize(url);
+export const getPrefixes = (url, size=32*8) => {
+  const canonical = canonicalize(url);
   return new Set(
-    Array.from(exports.suffixPostfixExpressions(canonical)).map((url) => this.truncatedSha256Prefix(url, size))
+    Array.from(suffixPostfixExpressions(canonical)).map((url) => truncatedSha256Prefix(url, size))
   );
 }
