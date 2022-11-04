@@ -193,7 +193,7 @@ export const suffixPostfixExpressions = function (canonicalURL) {
 
 export const truncatedSha256Prefix = (str, bits) => {
   const hash = crypto.createHash("sha256").update(str).digest();
-  return hash.slice(0, bits / 8);
+  return hash.subarray(0, bits / 8);
 };
 
 export const getPrefixMap = (url, size = 32 * 8) => {
