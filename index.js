@@ -1,7 +1,6 @@
 import crypto from "crypto";
 const URI_PARSE =
   /^(?:([^:\/?#]+):)?(?:\/\/((?:([^\/?#@]*)@)?(\[[^\/?#\]]+\]|[^\/?#:]*)(?:\:(\d*))?))?([^?#]*)(?:\?([^#]*))?(?:#((?:.|\n|\r)*))?/i; // regex for tokenising url from urijs module
-const DOUBLE_PATH_RE = new RegExp("//", "g");
 
 const token = "%[a-f0-9]{2}";
 const singleMatcher = new RegExp(token, "gi");
