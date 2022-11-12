@@ -155,6 +155,9 @@ export const canonicalize = function (url) {
     : "http://" + url.trim();
   const [, schema, , userinfo, host, , path, query, fragment] =
     urlWithScheme.match(URI_PARSE);
+  if (!schema || !host) {
+    return null;
+  }
   const normalizedHost = normalizeComponentEncoding(normalizeIPAddress(host))
     .replace(/\.+$/, "")
     .toLowerCase();

@@ -11,6 +11,11 @@ test("severalPercents", (t) => {
     "http://host/%25%25"
   );
 });
+test("mailto", (t) => {
+  assert.equal(
+    canonicalize(
+      "mailto:info@example.com?&subject=&cc=&bcc=&body=https://drive.google.com/drive/folders/aaaaa-?usp=sharing%0ABBBBB"), null)
+})
 test("manyPercents", (t) => {
   assert.equal(
     canonicalize("http://host/%2525252525252525"),
@@ -194,6 +199,6 @@ test("keepTwoSlashes", (t) => {
 test("shouldNotHangOnInvalidUnicode", (t) => {
   assert.equal(
     canonicalize("https://www.sample.com/path/text%2C-Float-%26%E2%80%A8-"),
-    "https://www.sample.com/path/text,-Float-& -"
+    "https://www.sample.com/path/text,-Float-&-"
   );
 });
