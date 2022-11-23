@@ -153,9 +153,9 @@ export const canonicalize = function (url) {
   const urlWithScheme = url.includes("://")
     ? url.trim()
     : "http://" + url.trim();
-  const [, schema, , userinfo, host, , path, query, fragment] =
+  const [, schema, , userinfo, host, , path, query] =
     urlWithScheme.match(URI_PARSE);
-  if (!schema || !host) {
+  if (!schema || !host || host.length > 255) {
     return null;
   }
   const normalizedHost = normalizeComponentEncoding(normalizeIPAddress(host))
@@ -163,10 +163,8 @@ export const canonicalize = function (url) {
     .toLowerCase();
   const normalizedPath = normalizeComponentEncoding(normalizeDotsInPaths(path));
   const normalizedQuery = query !== undefined ? `?${query}` : "";
-
-  return `${schema}://${
-    userinfo ?? ""
-  }${normalizedHost}${normalizedPath}${normalizedQuery}`;
+  
+  return `${schema}://${normalizedHost}${normalizedPath}${normalizedQuery}`;
 };
 
 export const suffixPostfixExpressions = function (canonicalURL) {
