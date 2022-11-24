@@ -14,3 +14,10 @@ test("prefixes", function () {
     ])
   );
 });
+
+test("don't fail no no", function () {
+  assert.deepEqual(
+    getPrefixes(`https://${Array(256).fill("a").join()}.com/a/test/index.html?abc123`, 32),
+    new Set()
+  );
+});

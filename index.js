@@ -207,6 +207,9 @@ export const getPrefixMap = (url, size = 32 * 8) => {
 
 export const getPrefixes = (url, size = 32 * 8) => {
   const canonical = canonicalize(url);
+  if (canonical === null) {
+    return new Set();
+  }
   return new Set(
     Array.from(suffixPostfixExpressions(canonical)).map((url) =>
       truncatedSha256Prefix(url, size)
