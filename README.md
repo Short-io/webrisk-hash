@@ -12,6 +12,8 @@ npm install webrisk-hash
 ### Main usage
 
 ```javascript
+import { getPrefixes } from "webrisk-hash";
+
 getPrefixes("https://google.com/a/test/index.html?abc123") ===
     new Set([
       Buffer.from([136, 152, 30, 98]),
@@ -29,7 +31,7 @@ getPrefixes("https://google.com/a/test/index.html?abc123") ===
 Returns list of expressions suitable for webrisk API (https://cloud.google.com/web-risk/docs/urls-hashing#suffixprefix_expressions)
 
 ```javascript
-const { suffixPostfixExpressions } = require('webrisk-hash');
+import { suffixPostfixExpressions } from 'webrisk-hash';
 suffixPostfixExpressions('http://a.b.c/1/2.html?param=1') === new Set([
     'a.b.c/1/2.html?param=1',
     'a.b.c/1/2.html',
@@ -52,7 +54,7 @@ suffixPostfixExpressions('http://192.168.0.1/1') === new Set([
 Makes URL canonical according to the crazy webrisk requirements (https://cloud.google.com/web-risk/docs/urls-hashing#canonicalization)
 
 ```javascript
-const { canonicalize } = require('webrisk-hash');
+import { canonicalize } from 'webrisk-hash';
 canonicalize("http://host/%25%32%35") == "http://host/%25";
 canonicalize("http://host/%25%32%35%25%32%35") == "http://host/%25%25";
 canonicalize("http://host/%2525252525252525") == "http://host/%25";
